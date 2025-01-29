@@ -1,6 +1,5 @@
-# French project
-# By Killex8569
-
+# Killex8569
+# French student's project
 from tkinter import *
 import customtkinter
 from customtkinter import CTkImage
@@ -15,8 +14,12 @@ app = customtkinter.CTk()
 app.geometry("700x600")
 app.title("Interface de Connexion")
 
+# Variable pour stocker la frame utilisateur
+user_frame = None
+
 # Fonction de connexion
 def login():
+    global user_frame  # Indiquer que l'on va modifier cette variable globale
     login_admin = "admin"
     password_admin = "123456"
     
@@ -36,17 +39,27 @@ def login():
     else:
         print("Identifiants incorrects.")
 
+# Fonction de déconnexion
+def logout():
+    global user_frame
+    
+    if user_frame is not None:
+        user_frame.pack_forget()  # Masquer l'interface utilisateur
+
+    # Réafficher l'interface de connexion
+    main_frame.pack(pady=100, padx=100, fill="both", expand=True)
+
 # Fonction pour afficher l'interface utilisateur après connexion
 def show_user_interface():
+    global user_frame
     user_frame = customtkinter.CTkFrame(master=app)
     user_frame.pack(pady=100, padx=100, fill="both", expand=True)
 
     user_label = customtkinter.CTkLabel(master=user_frame, text="Bienvenue dans l'interface utilisateur")
     user_label.pack(pady=12, padx=10)
 
-    # Ajoute ici les éléments de ton interface utilisateur principale
-    # Exemple : un bouton pour fermer l'application
-    logout_button = customtkinter.CTkButton(master=user_frame, text="Déconnexion", command=app.quit)
+    # Bouton de déconnexion
+    logout_button = customtkinter.CTkButton(master=user_frame, text="Déconnexion", command=logout)
     logout_button.pack(pady=10, padx=10)
 
 # GUI python (Frame de connexion)
